@@ -8,6 +8,16 @@
 
 <h:head>
 	<title>Home - Feed Manager App</title>
+	<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/redmond/skin.css" />
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+ 	<script>
+ 	$(function() {
+ 	    $( "#accordion" ).accordion({
+ 	      collapsible: true
+ 	    });
+ 	  });
+	</script>
 </h:head>
 <h:body>
 	<h:form>
@@ -32,25 +42,18 @@
 	
 	<br />
 	<br />
-	<h:form>
-	<table>
 
- 
-	<tr>
-		<th style="font-size: 2em">Título</th>
-		<th style="font-size: 2em">Descrição</th>
-	</tr>
-	<tbody>
-	 <ui:repeat var="feed" value="#{userBean.feeds}">
-	<tr>
-		<td>#{feed.title}</td>
-		<td>#{feed.description}</td>
-	</tr>
-	   </ui:repeat>
-	</tbody>
- 
- 
-</table>
-</h:form>
+
+<h2>Noticias</h2>
+<div id="accordion">
+ <ui:repeat var="feed" value="#{userBean.feeds}">
+	<h3>#{feed.title}</h3>
+	<div>
+    <p>
+   		#{feed.description}
+    </p>
+  </div>
+</ui:repeat>
+</div>
 </h:body>
 </html>

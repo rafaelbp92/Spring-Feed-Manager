@@ -26,7 +26,7 @@ import com.sun.syndication.io.XmlReader;
 
 
 @Controller
-@Scope("request")
+@Scope("session")
 public class UserBean {
 	
 	@Autowired
@@ -41,6 +41,7 @@ public class UserBean {
 	public String assinarFeed(){
 		try{
 			service.assinarFeed(urlFeed, session.getUser());
+			gerarListaFeeds();
 			return "userPage";
 		}catch(IllegalArgumentException ex){
 			message(ex.getMessage());
@@ -81,7 +82,7 @@ public class UserBean {
 		            List<SyndEntry> entries = feed.getEntries();
 		            entriesList.addAll(entries);
 		 
-		            feeds= new ArrayList<RssEntry>();
+		            this.feeds= new ArrayList<RssEntry>();
 		 
 		            for (SyndEntry entry : entriesList) {
 
