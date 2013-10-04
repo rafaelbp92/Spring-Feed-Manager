@@ -72,4 +72,10 @@ public class UsuarioServiceImpl implements UserService{
 		daoFeed.save(feed);
 		
 	}
+
+	@Override
+	public User bindUser(User user) {
+		User u = dao.getById(user.getId());
+		return u;
+	}
 }

@@ -26,7 +26,7 @@ import com.sun.syndication.io.XmlReader;
 
 
 @Controller
-@Scope("session")
+@Scope("request")
 public class UserBean {
 	
 	@Autowired
@@ -66,7 +66,7 @@ public class UserBean {
 	@SuppressWarnings("unchecked")
 	private void gerarListaFeeds(){	
 	        try {
-	          User user = session.getUser();
+	          User user = service.bindUser(session.getUser());
 	          List<Feed> feedsUrls = user.getFeeds();
 	          List<SyndEntry> entriesList = new ArrayList<SyndEntry>();
 	          for (Feed f : feedsUrls) {
