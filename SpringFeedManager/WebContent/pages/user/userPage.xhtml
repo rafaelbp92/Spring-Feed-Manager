@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<h:head>
+	<title>Home - Feed Manager App</title>
+</h:head>
+<h:body>
+	<h:form>
+	<h:messages />
+			<h:outputText value="Bem Vindo! #{userSession.user.username}" /><br />
+			<h:commandButton value="Logout!" action="#{authenticator.logout}" />
+	</h:form>
+	<br />	
+	<h:form>
+		<h1>Assinar Feed</h1>
+		<h:panelGrid columns="2">   		
+		     	
+				      	<h:outputLabel value="Link do feed" />
+		     			<h:inputText value="#{userBean.urlFeed}" style="width:500px"/>
+										
+		</h:panelGrid>
+					
+		<br />	
+		
+		<h:commandButton value="Assinar" action="#{userBean.assinarFeed}" rendered="true"/>
+	</h:form>
+	
+	<br />
+	<br />
+	<table>
+
+ 
+	<tr>
+		<th style="font-size: 2em">Título</th>
+		<th style="font-size: 2em">Descrição</th>
+	</tr>
+	<tbody>
+	 <ui:repeat var="feed" value="#{userBean.feeds}">
+	<tr>
+		<td>#{feed.title}</td>
+		<td>#{feed.description}</td>
+	</tr>
+	   </ui:repeat>
+	</tbody>
+ 
+ 
+</table>
+</h:body>
+</html>

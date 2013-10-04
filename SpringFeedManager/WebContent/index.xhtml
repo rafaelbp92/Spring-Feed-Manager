@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title>Login - Spring Security</title>
+	<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/redmond/skin.css" />
+	
+</h:head>
+<h:body>
+	<h:form prependId="false">
+		<p:dialog header="Feed Manager App"
+	   				  modal="true"
+	   				  closable="false"
+	   				  position="center"
+	   				  widgetVar="modalLogin"
+	   				  minWidth="300"
+	   				  width="300"
+	   				  showEffect="slide" 
+	   		    	  draggable="false"
+	   		    	  resizable="false"
+	   		    	  visible="true">		 
+	   				 
+	   			<center>	     				 
+		   				<h:messages /> 
+		   			<h:panelGrid columns="2">   		
+		     	
+				      	<h:outputLabel value="Login" />
+		     			<h:inputText value="#{authenticator.username}" />
+		
+				 		<h:outputLabel value="Senha" />
+						<h:inputSecret value="#{authenticator.password}" />
+										
+					</h:panelGrid>
+					
+					<br />	
+		
+					<h:commandButton value="Logar!" action="#{authenticator.login}" />
+					<br />	
+					<h:commandLink value="Cadastrar-se" action="#{redirectorBean.cadastro}" />
+				</center>
+					
+			</p:dialog>
+	</h:form>
+	
+</h:body>
+</html>
