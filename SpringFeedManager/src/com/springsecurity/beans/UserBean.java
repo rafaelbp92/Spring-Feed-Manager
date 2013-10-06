@@ -41,9 +41,22 @@ public class UserBean {
 	public String assinarFeed(){
 		try{
 			service.assinarFeed(urlFeed, session.getUser());
-			gerarListaFeeds();
 			return "userPage";
 		}catch(IllegalArgumentException ex){
+			message(ex.getMessage());
+		}
+		catch (Exception e) {
+			message(e.getMessage());
+		}
+		return "";
+	}
+	
+	public String cancelarFeed(){
+		try{
+			service.cancelarFeed(urlFeed, session.getUser());
+			return "userPage";
+		}
+		catch(IllegalArgumentException ex){
 			message(ex.getMessage());
 		}
 		return "";

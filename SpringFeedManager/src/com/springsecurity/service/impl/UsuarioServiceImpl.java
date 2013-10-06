@@ -12,6 +12,9 @@ import com.springsecurity.entities.Feed;
 import com.springsecurity.entities.Role;
 import com.springsecurity.entities.User;
 import com.springsecurity.service.UserService;
+import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.io.SyndFeedInput;
+import com.sun.syndication.io.XmlReader;
 
 @Service
 public class UsuarioServiceImpl implements UserService{
@@ -63,13 +66,15 @@ public class UsuarioServiceImpl implements UserService{
 		if(teste != null){
 			throw new IllegalArgumentException(
 					"Atenção, url já cadastrada");
+		}try{
+			Feed feed = new Feed();
+			feed.setId(null);
+			feed.setUrl(url);
+			feed.setUser(user);
+			daoFeed.save(feed);
+		}catch(Exception ex){
+			ex.toString();
 		}
-		
-		Feed feed = new Feed();
-		feed.setId(null);
-		feed.setUrl(url);
-		feed.setUser(user);
-		daoFeed.save(feed);
 		
 	}
 
@@ -77,5 +82,18 @@ public class UsuarioServiceImpl implements UserService{
 	public User bindUser(User user) {
 		User u = dao.getById(user.getId());
 		return u;
+	}
+
+	@Override
+	public void cancelarFeed(String url, User user) {
+		if (user==null || isEmptyOrNull(url)) {
+			throw new IllegalArgumentException(
+					"Atenção, url inválida!");
+		}
+		Feed f = daoFeed.getByUrlAndUser(url, user);
+		if(f==null)
+			throw new IllegalArgumentException(
+					"Feed não encontrado");
+		daoFeed.delete(f);
 	}
 }

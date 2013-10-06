@@ -21,7 +21,6 @@
 </h:head>
 <h:body>
 	<h:form>
-	<h:messages />
 			<h:outputText value="Bem Vindo! #{userSession.user.username}" /><br />
 			<h:commandButton value="Logout!" action="#{authenticator.logout}" />
 	</h:form>
@@ -38,6 +37,8 @@
 		<br />	
 		
 		<h:commandButton value="Assinar" action="#{userBean.assinarFeed}"/>
+	    <h:commandButton value="Cancelar Assinatura" action="#{userBean.cancelarFeed}"/>
+		<h:messages />
 	</h:form>
 	
 	<br />

@@ -7,10 +7,12 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.springsecurity.dao.FeedDAO;
+import com.springsecurity.dao.UserDAO;
 import com.springsecurity.entities.Feed;
 import com.springsecurity.entities.User;
 
@@ -20,6 +22,9 @@ public class FeedDAOImpl implements FeedDAO{
 	
 	@PersistenceContext
 	private EntityManager entityManager;
+	
+	@Autowired
+	private UserDAO dao;
 	
 	@Override
 	public void save(Feed feed) {
@@ -42,6 +47,20 @@ public class FeedDAOImpl implements FeedDAO{
 			return null;
 		}
 		return (Feed) l.get(0);
+	}
+
+	@Override
+	public void delete(Feed feed) {
+		feed = getById(feed.getId());
+		User user = dao.getById(feed.getUser().getId());
+		user.getFeeds().remove(feed);
+		dao.update(user);
+		entityManager.remove(feed);	
+	}
+
+	@Override
+	public Feed getById(Long id) {
+		return entityManager.find(Feed.class, id);
 	}
 	
 }
