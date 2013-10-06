@@ -37,13 +37,20 @@
 		<br />	
 		
 		<h:commandButton value="Assinar" action="#{userBean.assinarFeed}"/>
-	    <h:commandButton value="Cancelar Assinatura" action="#{userBean.cancelarFeed}"/>
 		<h:messages />
 	</h:form>
 	
 	<br />
 	<br />
-
+	<h2>Feeds cadastrados</h2>
+	<h:form>
+		<ui:repeat var="feed" value="#{userBean.userUrls}">
+		<li>#{feed.url}<h:commandLink value="Cancelar Assinatura" action="#{userBean.cancelarFeed(feed.url)}"/></li>
+		</ui:repeat>
+	</h:form>
+	
+	<br />
+	<br />
 
 <h2>Noticias</h2>
 <div id="accordion">

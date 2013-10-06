@@ -34,7 +34,7 @@ public class UserBean {
 	@Autowired
 	private UserSession session;
 	private List<RssEntry> feeds;
-	
+	private List<Feed> userUrls;
 	private String urlFeed;
 	
 
@@ -51,9 +51,9 @@ public class UserBean {
 		return "";
 	}
 	
-	public String cancelarFeed(){
+	public String cancelarFeed(String url){
 		try{
-			service.cancelarFeed(urlFeed, session.getUser());
+			service.cancelarFeed(url, session.getUser());
 			return "userPage";
 		}
 		catch(IllegalArgumentException ex){
@@ -135,6 +135,16 @@ public class UserBean {
 
 	public void setFeeds(List<RssEntry> feeds) {
 		this.feeds = feeds;
+	}
+
+	public List<Feed> getUserUrls() {
+		User user = service.bindUser(session.getUser());
+		return user.getFeeds();
+		
+	}
+
+	public void setUserUrls(List<Feed> userUrls) {
+		this.userUrls = userUrls;
 	}
 	
 }
