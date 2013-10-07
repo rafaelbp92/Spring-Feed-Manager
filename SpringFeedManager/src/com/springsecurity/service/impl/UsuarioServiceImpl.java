@@ -1,5 +1,9 @@
 package com.springsecurity.service.impl;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +17,7 @@ import com.springsecurity.entities.Role;
 import com.springsecurity.entities.User;
 import com.springsecurity.service.UserService;
 import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 
@@ -57,7 +62,7 @@ public class UsuarioServiceImpl implements UserService{
 	}
 
 	@Override
-	public void assinarFeed(String url, User user) {
+	public void assinarFeed(String url, User user) throws MalformedURLException, IOException, IllegalArgumentException, FeedException {
 		if (user==null || isEmptyOrNull(url)) {
 			throw new IllegalArgumentException(
 					"Atenção, url inválida!");
@@ -66,15 +71,19 @@ public class UsuarioServiceImpl implements UserService{
 		if(teste != null){
 			throw new IllegalArgumentException(
 					"Atenção, url já cadastrada");
-		}try{
+		}
+		   // Conectar
+		    URLConnection feedUrl = new URL(url).openConnection();
+		    SyndFeedInput input = new SyndFeedInput();
+		    // Construir a lista de feeds
+		    SyndFeed synd = input.build(new XmlReader(feedUrl));
+		    
 			Feed feed = new Feed();
 			feed.setId(null);
 			feed.setUrl(url);
 			feed.setUser(user);
 			daoFeed.save(feed);
-		}catch(Exception ex){
-			ex.toString();
-		}
+	
 		
 	}
 

@@ -46,7 +46,7 @@ public class UserBean {
 			message(ex.getMessage());
 		}
 		catch (Exception e) {
-			message(e.getMessage());
+			message("Ocorreu um erro: verifique se sua URL relmente é um feed");
 		}
 		return "";
 	}
@@ -86,10 +86,10 @@ public class UserBean {
 	        	  String rssFeedUrl = f.getUrl();
 			        SimpleDateFormat df =
 			                new SimpleDateFormat("dd/MM/yyyy");
-		            // Connect
+		            // Conectar
 		            URLConnection feedUrl = new URL(rssFeedUrl).openConnection();
 		            SyndFeedInput input = new SyndFeedInput();
-		            // Build the feed list
+		            // Construir a lista de feeds
 		            SyndFeed feed = input.build(new XmlReader(feedUrl));
 		            feed.setEncoding("UTF-8");
 		            List<SyndEntry> entries = feed.getEntries();
@@ -139,7 +139,7 @@ public class UserBean {
 
 	public List<Feed> getUserUrls() {
 		User user = service.bindUser(session.getUser());
-		return user.getFeeds();
+		return userUrls = user.getFeeds();
 		
 	}
 
